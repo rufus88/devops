@@ -95,5 +95,5 @@ package { 'typespeed':
 cron { 'run-puppet':
   command => '/usr/local/bin/puppetrun',
   hour => '*',
-  minute: '*/10',
+  minute => '*/10',
 }
