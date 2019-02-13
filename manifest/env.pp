@@ -93,7 +93,7 @@ package { 'typespeed':
 
 #Set a cronjob for refreshing the manifest
 cron { 'run-puppet':
-  command => /usr/local/bin/puppetrun,
+  command => '/usr/local/bin/puppetrun',
   hour => '*',
   minute: '*/10',
 }
