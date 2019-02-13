@@ -79,17 +79,26 @@ package { 'git':
 #}
 
 
+<<<<<<< HEAD
 #Instalamos testapp
+=======
+#Instalamos apache2
+>>>>>>> 8c5c1a189bdca1fe51a7239ca38e7f288e880b89
 package { 'cowsay':
   ensure => installed,
 }
 
 
+<<<<<<< HEAD
 #Instalamos testapp
+=======
+#Instalamos apache2
+>>>>>>> 8c5c1a189bdca1fe51a7239ca38e7f288e880b89
 package { 'typespeed':
   ensure => installed,
 }
 
+<<<<<<< HEAD
 
 
 #Set a cronjob for refreshing the manifest
@@ -99,3 +108,5 @@ cron { run-puppet':
   minute: '*/10',
 }
 
+=======
+>>>>>>> 8c5c1a189bdca1fe51a7239ca38e7f288e880b89
