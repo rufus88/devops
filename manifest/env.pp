@@ -79,14 +79,23 @@ package { 'git':
 #}
 
 
-#Instalamos apache2
+#Instalamos testapp
 package { 'cowsay':
   ensure => installed,
 }
 
 
-#Instalamos apache2
+#Instalamos testapp
 package { 'typespeed':
   ensure => installed,
+}
+
+
+
+#Set a cronjob for refreshing the manifest
+cron { run-puppet':
+  command => /etc/puppet/code/environments/puppet-executor.sh,
+  hour => '*',
+  minute: '*/10',
 }
 
