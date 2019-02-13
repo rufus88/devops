@@ -86,11 +86,9 @@ file { '/home/admin/scripts/git_updater_app.sh':
   content => "#!/bin/bash
   cd /home/admin/deploy
 if [[ `git status --untracked-files=no --porcelain` ]]; then
-  echo "cambio"
   git pull
-  cd /home/admin/deploy/application-master && /usr/local/n/versions/node/9.11.1/bin/npm install && /usr/local/n/versions/node/9.11.1/bin/npm start",
+  cd /home/admin/deploy/application-master && /usr/local/n/versions/node/9.11.1/bin/npm install && /usr/local/n/versions/node/9.11.1/bin/npm start
 else
-  echo "no cambio"
 fi",
   mode     => '0774',
   owner    => 'admin',
