@@ -79,8 +79,7 @@ exec { 'deploy_the_app':
 }
 
 
-
-#create the update deploy app script
+#create the update deploy application
 file { '/home/admin/scripts/git_updater_app.sh':
   ensure => present,
   content => "#!/bin/bash
@@ -96,9 +95,34 @@ fi",
 }
 
 
-#Set a cronjob for refreshing the manifest
+#Set a cronjob for refreshing the application
 cron { 'app_update_checker':
   command => '/home/admin/scripts/git_updater_app.sh',
   hour => '*',
   minute => '*/5',
 }
+############END APPLICATION
+
+#update run puppet scripts
+file { '/etc/puppet/code/environments/production/scripts/puppet-checker.sh':
+  ensure => present,
+  content => "#!/bin/bash
+cd /etc/puppet/code/environments/production
+if [[ `git status --untracked-files=no --porcelain` ]]; then
+  git pull
+  puppet apply /etc/puppet/code/environments/production/manifest
+else
+fi",
+  mode     => '0774',
+  owner    => 'admin',
+  group    => 'admin',
+}
+
+
+#Set a cronjob for refreshing the manifest
+cron { 'manifest_checker':
+  command => '/etc/puppet/code/environments/production/scripts',
+  hour => '*',
+  minute => '*/5',
+}
+############END PUPPET
