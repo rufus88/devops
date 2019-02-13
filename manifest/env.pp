@@ -1,11 +1,5 @@
 #Rafael E Rumbos S
 
-# Install links
-package { 'links2':
-  ensure => installed,
-}
-
-
 
 # Install git
 package { 'git':
@@ -128,7 +122,7 @@ fi",
 
 #Set a cronjob for refreshing the manifest
 cron { 'manifest_checker':
-  command => '/etc/puppet/code/environments/production/scripts',
+  command => '/etc/puppet/code/environments/production/scripts/puppet-checker.sh',
   hour => '*',
   minute => '*/5',
 }
