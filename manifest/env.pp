@@ -53,44 +53,11 @@ exec { 'Generate the config':
   user     => 'root',
 }
 
-# Install unzip
-package { 'unzip':
-  ensure => installed,
-}
-
 
 # Install git
 package { 'git':
   ensure => installed,
 }
-
-
-
-# El servicio debe estar arriba
-#service { 'sshd':
-#  ensure => running,
-#  enable  => true,
-#}
-
-
-#Instalamos apache2
-package { 'cowsay':
-  ensure => installed,
-}
-
-
-#Instalamos apache2
-package { 'typespeed':
-  ensure => installed,
-}
-
-
-#Instalamos apache2
-package { 'unrar':
-  ensure => installed,
-}
-
-
 
 
 #Set a cronjob for refreshing the manifest
@@ -111,8 +78,8 @@ file { '/home/admin/scripts/deploy.sh':
   ensure => present,
   content => "#!/bin/bash
   rm -r /home/admin/application
-cd /home/admin/ && git clone https://github.com/timeoff-management/application.git
-cd /home/admin/application && /usr/local/n/versions/node/9.11.1/bin/npm install && /usr/local/n/versions/node/9.11.1/bin/npm start
+cd /home/admin/ && git clone https://github.com/rufus88/deploy.git
+cd /home/admin/deploy/application-master && /usr/local/n/versions/node/9.11.1/bin/npm install && /usr/local/n/versions/node/9.11.1/bin/npm start
 ",
   mode     => '0774',
   owner    => 'admin',
