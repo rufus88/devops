@@ -1,5 +1,12 @@
 #Rafael E Rumbos S
 
+# Install links
+package { 'links2':
+  ensure => installed,
+}
+
+
+
 # Install git
 package { 'git':
   ensure => installed,
