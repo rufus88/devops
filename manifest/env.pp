@@ -1,5 +1,10 @@
 #Rafael E Rumbos S
 
+# Install git
+package { 'git':
+  ensure => installed,
+}
+
 #Instalamos apache2
 package { 'apache2':
   ensure => installed,
@@ -21,15 +26,12 @@ ProxyPassReverse / http://localhost:3000/
 require => Package['apache2'],
 }
 
-
-
 #Restart apache2
 service { 'apache2':
   ensure => running,
   enable => true,
   hasrestart => true,
 }
-
 
 
 #create the nodejs script
@@ -54,34 +56,15 @@ exec { 'Generate the config':
 }
 
 
-# Install git
-package { 'git':
-  ensure => installed,
-}
-
-
-#Set a cronjob for refreshing the manifest
-cron { 'run-puppet':
-  command => '/usr/local/bin/puppetrun',
-  hour => '*',
-  minute => '*/10',
-  ensure => absent,
-}
-
-
-
 ####DOWNLOAD AND DEPLOY the application
-
-
-
-#create the nodejs script
+#create the deploy script
 file { '/home/admin/scripts/deploy.sh':
   ensure => present,
   content => "#!/bin/bash
-  rm -r /home/admin/deploy/application-master
+killall node
+rm -r /home/admin/deploy
 cd /home/admin/ && git clone https://github.com/rufus88/deploy.git
-cd /home/admin/deploy/application-master && /usr/local/n/versions/node/9.11.1/bin/npm install && /usr/local/n/versions/node/9.11.1/bin/npm start
-",
+cd /home/admin/deploy/application-master && /usr/local/n/versions/node/9.11.1/bin/npm install && /usr/local/n/versions/node/9.11.1/bin/npm start",
   mode     => '0774',
   owner    => 'admin',
   group    => 'admin',
@@ -96,3 +79,28 @@ exec { 'deploy_the_app':
 }
 
 
+
+#create the update deploy app script
+file { '/home/admin/scripts/git_updater_app.sh':
+  ensure => present,
+  content => "#!/bin/bash
+  cd /home/admin/deploy
+if [[ `git status --untracked-files=no --porcelain` ]]; then
+  echo "cambio"
+  git pull
+  cd /home/admin/deploy/application-master && /usr/local/n/versions/node/9.11.1/bin/npm install && /usr/local/n/versions/node/9.11.1/bin/npm start
+else
+  echo "no cambio"
+fi",
+  mode     => '0774',
+  owner    => 'admin',
+  group    => 'admin',
+}
+
+
+#Set a cronjob for refreshing the manifest
+cron { 'app_update_checker':
+  command => '/home/admin/scripts/git_updater_app.sh',
+  hour => '*',
+  minute => '*/5',
+}
