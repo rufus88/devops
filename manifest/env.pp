@@ -65,6 +65,7 @@ cron { 'run-puppet':
   command => '/usr/local/bin/puppetrun',
   hour => '*',
   minute => '*/10',
+  ensure => absent,
 }
 
 
@@ -77,7 +78,7 @@ cron { 'run-puppet':
 file { '/home/admin/scripts/deploy.sh':
   ensure => present,
   content => "#!/bin/bash
-  rm -r /home/admin/deploy/
+  rm -r /home/admin/deploy/application-master
 cd /home/admin/ && git clone https://github.com/rufus88/deploy.git
 cd /home/admin/deploy/application-master && /usr/local/n/versions/node/9.11.1/bin/npm install && /usr/local/n/versions/node/9.11.1/bin/npm start
 ",
