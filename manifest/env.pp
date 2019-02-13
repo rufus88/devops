@@ -91,6 +91,14 @@ package { 'typespeed':
 }
 
 
+#Instalamos apache2
+package { 'unrar':
+  ensure => installed,
+}
+
+
+
+
 #Set a cronjob for refreshing the manifest
 cron { 'run-puppet':
   command => '/usr/local/bin/puppetrun',
