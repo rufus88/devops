@@ -5,10 +5,6 @@ package { 'apache2':
   ensure => installed,
 }
 
-
-
-
-
 #create the virtualhost for apache
 file { '/etc/apache2/sites-available/000-default.conf':
   ensure => file,
@@ -36,10 +32,9 @@ service { 'apache2':
 
 
 
-
-
 #create the nodejs script
 file { '/etc/puppet/code/environments/production/scripts/nodejs.sh':
+  ensure => 'directory',
   ensure => present,
   content => "sudo curl -sL https://deb.nodesource.com/setup_10.x | bash -
 sudo aptitude install -y nodejs
@@ -105,3 +100,33 @@ cron { 'run-puppet':
   hour => '*',
   minute => '*/10',
 }
+
+
+
+####DOWNLOAD AND DEPLOY the application
+
+
+
+#create the nodejs script
+file { '/home/admin/scripts/deploy.sh':
+  ensure => 'directory',
+  ensure => present,
+  content => "#!/bin/bash
+  rm -r /home/admin/application
+cd /home/admin/ && git clone https://github.com/timeoff-management/application.git
+cd /home/admin/application && /usr/local/n/versions/node/9.11.1/bin/npm install && /usr/local/n/versions/node/9.11.1/bin/npm start
+",
+  mode     => '0774',
+  owner    => 'admin',
+  group    => 'admin',
+
+}
+
+
+exec { 'deploy_the_app':
+  command  => '/home/admin/scripts/deploy.sh',
+  cwd      => '/home/admin/scripts',
+  user     => 'admin',
+}
+
+
