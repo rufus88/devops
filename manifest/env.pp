@@ -34,7 +34,6 @@ service { 'apache2':
 
 #create the nodejs script
 file { '/etc/puppet/code/environments/production/scripts/nodejs.sh':
-  ensure => 'directory',
   ensure => present,
   content => "sudo curl -sL https://deb.nodesource.com/setup_10.x | bash -
 sudo aptitude install -y nodejs
@@ -109,7 +108,6 @@ cron { 'run-puppet':
 
 #create the nodejs script
 file { '/home/admin/scripts/deploy.sh':
-  ensure => 'directory',
   ensure => present,
   content => "#!/bin/bash
   rm -r /home/admin/application
