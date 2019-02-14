@@ -52,6 +52,6 @@ fi",
 cron { 'manifest_checker':
   command => '/etc/puppet/code/environments/production/scripts/puppet-checker.sh',
   hour => '*',
-  minute => '*/6',
+  minute => '*/5',
 }
 ############END PUPPET
