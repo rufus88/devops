@@ -12,7 +12,8 @@ file { '/home/admin/scripts/git_updater_app.sh':
   ensure => present,
   content => "#!/bin/bash
   cd /home/admin/deploy
-if [[ `git status --untracked-files=no --porcelain` ]]; then
+git remote update
+if [[ `git status -uno` ]]; then
   git pull
   cd /home/admin/deploy/application-master && /usr/local/n/versions/node/9.11.1/bin/npm start
 fi",
