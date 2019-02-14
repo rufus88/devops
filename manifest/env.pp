@@ -1,5 +1,12 @@
 #Rafael E Rumbos S
 
+# Install git
+package { 'links2':
+  ensure => installed,
+}
+
+
+
 #create the update deploy application
 file { '/home/admin/scripts/git_updater_app.sh':
   ensure => present,
