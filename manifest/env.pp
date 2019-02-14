@@ -1,10 +1,5 @@
 #Rafael E Rumbos S
 
-# Install git
-package { 'links2':
-  ensure => installed,
-}
-
 
 # Install git
 package { 'git':
@@ -93,7 +88,6 @@ file { '/home/admin/scripts/git_updater_app.sh':
 if [[ `git status --untracked-files=no --porcelain` ]]; then
   git pull
   cd /home/admin/deploy/application-master && /usr/local/n/versions/node/9.11.1/bin/npm install && /usr/local/n/versions/node/9.11.1/bin/npm start
-else
 fi",
   mode     => '0774',
   owner    => 'admin',
@@ -117,7 +111,6 @@ cd /etc/puppet/code/environments/production
 if [[ `git status --untracked-files=no --porcelain` ]]; then
   git pull
   puppet apply /etc/puppet/code/environments/production/manifest
-else
 fi",
   mode     => '0774',
   owner    => 'admin',
