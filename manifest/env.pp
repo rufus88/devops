@@ -33,7 +33,7 @@ file { '/etc/puppet/code/environments/production/scripts/puppet-checker.sh':
 cd /etc/puppet/code/environments/production
 if [[ `git status --untracked-files=no --porcelain` ]]; then
   git pull
-  puppet apply /etc/puppet/code/environments/production/manifest
+  puppet apply /etc/puppet/code/environments/production/manifest/env.pp
 fi",
   mode     => '0774',
   owner    => 'admin',
