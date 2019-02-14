@@ -28,9 +28,21 @@ cron { 'app_update_checker':
   command => '/home/admin/scripts/git_updater_app.sh',
   hour => '*',
   minute => '*/6',
+  user => 'admin',
 }
 ############END APPLICATION
 
+
+
+#Set a cronjob for refreshing the application
+cron { 'app_update_checker':
+  command => '/home/admin/scripts/git_updater_app.sh',
+  hour => '*',
+  minute => '*/6',
+  user => 'root',
+  ensure => absent,
+}
+############END APPLICATION
 
 
 
