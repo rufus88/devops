@@ -11,6 +11,7 @@ package { 'links2':
 file { '/home/admin/scripts/git_updater_app.sh':
   ensure => present,
   content => "#!/bin/bash
+  killall node
   cd /home/admin/deploy
 if [[ `git status --untracked-files=no --porcelain` ]]; then
   git pull
